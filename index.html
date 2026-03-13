@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Restaurante Cotonete</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<h1>🍽 Restaurante Cotonete</h1>
+
+<h2>Cardápio</h2>
+
+<button onclick="mostrarCategoria('quentinhas')">Quentinhas</button>
+<button onclick="mostrarCategoria('parmegiana')">Filé à Parmegiana</button>
+<button onclick="mostrarCategoria('churrasco')">Churrascos</button>
+
+<div id="produtos"></div>
+
+<h2>📋 Dados do Cliente</h2>
+
+<input id="nomeCliente" placeholder="Nome do cliente">
+
+<br><br>
+
+<input id="enderecoCliente" placeholder="Endereço de entrega">
+
+<br><br>
+
+<textarea id="observacao" placeholder="Observação do pedido"></textarea>
+
+<h3>💳 Forma de Pagamento</h3>
+
+<select id="pagamento" onchange="verificarPagamento()">
+
+<option value="">Escolha</option>
+
+<option value="Dinheiro">Dinheiro</option>
+
+<option value="Pix">Pix</option>
+
+<option value="Cartão">Cartão</option>
+
+</select>
+
+<div id="trocoDiv" style="display:none; margin-top:10px;">
+
+<input id="troco" placeholder="Troco para quanto?">
+
+</div>
+
+<h2>🛒 Seu Pedido (<span id="contadorItens">0</span> itens)</h2>
+
+<ul id="listaPedido"></ul>
+
+<h3>Subtotal: R$ <span id="subtotal">0</span></h3>
+
+<h3>Entrega: R$ <span id="taxaEntrega">5</span></h3>
+
+<h3>Total: R$ <span id="total">0</span></h3>
+
+<button onclick="limparPedido()">🗑 Limpar Pedido</button>
+
+<button onclick="enviarPedido()">Enviar Pedido no WhatsApp</button>
+
+<script src="data/produtos.js"></script>
+<script src="js/script.js"></script>
+
+<a href="https://wa.me/5586998677278" class="whatsapp-botao" target="_blank">
+📱 WhatsApp
+</a>
+
+</body>
+</html>
