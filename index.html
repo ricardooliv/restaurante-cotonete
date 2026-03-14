@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Restaurante Cotonete</title>
+<title>Cardápio</title>
 
 <link rel="stylesheet" href="css/style.css">
 
@@ -13,68 +14,51 @@
 
 <body>
 
-<h1>🍽 Restaurante Cotonete</h1>
+<h1>Cardápio</h1>
 
-<h2>Cardápio</h2>
+<div class="categorias">
 
 <button onclick="mostrarCategoria('quentinhas')">Quentinhas</button>
-<button onclick="mostrarCategoria('parmegiana')">Filé à Parmegiana</button>
-<button onclick="mostrarCategoria('churrasco')">Churrascos</button>
-
-<div id="produtos"></div>
-
-<h2>📋 Dados do Cliente</h2>
-
-<input id="nomeCliente" placeholder="Nome do cliente">
-
-<br><br>
-
-<input id="enderecoCliente" placeholder="Endereço de entrega">
-
-<br><br>
-
-<textarea id="observacao" placeholder="Observação do pedido"></textarea>
-
-<h3>💳 Forma de Pagamento</h3>
-
-<select id="pagamento" onchange="verificarPagamento()">
-
-<option value="">Escolha</option>
-
-<option value="Dinheiro">Dinheiro</option>
-
-<option value="Pix">Pix</option>
-
-<option value="Cartão">Cartão</option>
-
-</select>
-
-<div id="trocoDiv" style="display:none; margin-top:10px;">
-
-<input id="troco" placeholder="Troco para quanto?">
+<button onclick="mostrarCategoria('churrascos')">Churrascos</button>
+<button onclick="mostrarCategoria('parmegiana')">Parmegiana</button>
 
 </div>
 
-<h2>🛒 Seu Pedido (<span id="contadorItens">0</span> itens)</h2>
+<div id="produtos"></div>
 
-<ul id="listaPedido"></ul>
+<h2>Seu Pedido</h2>
 
-<h3>Subtotal: R$ <span id="subtotal">0</span></h3>
+<div id="listaPedido"></div>
 
-<h3>Entrega: R$ <span id="taxaEntrega">5</span></h3>
+<div class="total">
+Total: R$ <span id="total">0</span>
+</div>
 
-<h3>Total: R$ <span id="total">0</span></h3>
+<div class="botoesPedido">
 
-<button onclick="limparPedido()">🗑 Limpar Pedido</button>
+<button class="confirmar" onclick="confirmarPedido()">
+Confirmar Pedido
+</button>
 
-<button onclick="enviarPedido()">Enviar Pedido no WhatsApp</button>
+</div>
+
+<div id="aviso">Produto adicionado</div>
+
+<!-- carrinho fixo -->
+
+<div id="carrinhoBar" onclick="confirmarPedido()">
+
+<span id="resumoCarrinho">
+
+0 itens • R$0
+
+</span>
+
+</div>
 
 <script src="data/produtos.js"></script>
 <script src="js/script.js"></script>
 
-<a href="https://wa.me/5586998677278" class="whatsapp-botao" target="_blank">
-📱 WhatsApp
-</a>
-
 </body>
+
 </html>

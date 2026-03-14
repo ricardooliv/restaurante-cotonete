@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dados do Cliente</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+.form{
+
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+
+}
+
+.form input{
+
+width:100%;
+padding:10px;
+margin-bottom:10px;
+border-radius:6px;
+border:1px solid #ddd;
+
+}
+
+.tipoPedido{
+
+display:flex;
+gap:10px;
+margin-bottom:15px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Dados do Cliente</h1>
+
+<div class="form">
+
+<div class="tipoPedido">
+
+<button onclick="retirada()">Retirada</button>
+<button onclick="entrega()">Entrega</button>
+
+</div>
+
+<div id="dados"></div>
+
+</div>
+
+<script src="js/cliente.js"></script>
+
+</body>
+
+</html>

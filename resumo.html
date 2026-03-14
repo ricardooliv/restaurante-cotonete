@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Resumo do Pedido</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+.container{
+
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+
+}
+
+.itemResumo{
+
+display:flex;
+justify-content:space-between;
+margin-bottom:8px;
+
+}
+
+.totalResumo{
+
+font-weight:bold;
+margin-top:10px;
+
+}
+
+.botoes{
+
+display:flex;
+gap:10px;
+margin-top:15px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Resumo do Pedido</h1>
+
+<div class="container">
+
+<div id="listaResumo"></div>
+
+<div id="taxa"></div>
+
+<div class="totalResumo">
+Total: R$ <span id="totalFinal"></span>
+</div>
+
+<div class="botoes">
+
+<button onclick="editarPedido()">Editar Pedido</button>
+
+<button onclick="irPagamento()">Continuar</button>
+
+</div>
+
+</div>
+
+<script src="js/resumo.js"></script>
+
+</body>
+
+</html>

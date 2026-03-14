@@ -1,170 +1,242 @@
-let pedido = [];
-let subtotal = 0;
-let taxaEntrega = 5;
+let carrinho = []
 
-const divProdutos = document.getElementById("produtos");
-const listaPedido = document.getElementById("listaPedido");
-const subtotalSpan = document.getElementById("subtotal");
-const taxaEntregaSpan = document.getElementById("taxaEntrega");
-const totalSpan = document.getElementById("total");
-const contadorItens = document.getElementById("contadorItens");
-const opcoesQuentinha = document.getElementById("opcoesQuentinha");
-const pagamento = document.getElementById("pagamento");
-const trocoDiv = document.getElementById("trocoDiv");
-const troco = document.getElementById("troco");
+function mostrarCategoria(cat){
 
-function mostrarCategoria(categoria){
+let area = document.getElementById("produtos")
 
-    divProdutos.innerHTML = "";
+area.innerHTML=""
 
-    const titulo = document.createElement("h3");
+produtos[cat].forEach((prod,index)=>{
 
-    if(categoria === "quentinhas"){
-        titulo.innerText = "Escolha sua Quentinha";
-    }
+let acomp = prod.acompanhamentos
+? `<p class="acomp">${prod.acompanhamentos.join(" • ")}</p>`
+: ""
 
-    if(categoria === "parmegiana"){
-        titulo.innerText = "Escolha o tamanho do Parmegiana";
-    }
+area.innerHTML += `
 
-    if(categoria === "churrasco"){
-        titulo.innerText = "Escolha o tamanho do Churrasco";
-    }
+<div class="produto">
 
-    divProdutos.appendChild(titulo);
+<h3>${prod.nome}</h3>
 
-    produtos[categoria].forEach((produto, index) => {
+<p class="preco">R$ ${prod.preco}</p>
 
-        const item = document.createElement("div");
+${acomp}
 
-        item.innerHTML = `
-        <h3>${produto.nome}</h3>
+<div class="controle">
 
-        ${categoria === "quentinhas" ? 
-        "<p style='font-size:14px;color:gray'>Acompanha: arroz agrega, feijão tropeiro, salada, farofa e vinagrete</p>" 
-        : ""}
+<button onclick="menos(${index},'${cat}')">-</button>
 
-        <p>R$ ${produto.preco}</p>
+<span id="qtd-${cat}-${index}">1</span>
 
-        <button onclick="adicionarPedido('${categoria}', ${index})">
-        Adicionar
-        </button>
-        `;
+<button onclick="mais(${index},'${cat}')">+</button>
 
-        divProdutos.appendChild(item);
+</div>
 
-    });
+<button class="add"
+onclick="adicionar('${prod.nome}',${prod.preco},${index},'${cat}')">
+
+Adicionar
+
+</button>
+
+</div>
+
+`
+
+})
+
+}
+
+function mais(index,cat){
+
+let span=document.getElementById(`qtd-${cat}-${index}`)
+
+span.innerText=parseInt(span.innerText)+1
+
+}
+
+function menos(index,cat){
+
+let span=document.getElementById(`qtd-${cat}-${index}`)
+
+let qtd=parseInt(span.innerText)
+
+if(qtd>1){
+
+span.innerText=qtd-1
+
+}
+
+}
+
+function adicionar(nome,preco,index,cat){
+
+let qtd=parseInt(
+document.getElementById(`qtd-${cat}-${index}`).innerText
+)
+
+let item=carrinho.find(i=>i.nome===nome)
+
+if(item){
+
+item.qtd+=qtd
+
+}else{
+
+carrinho.push({nome,preco,qtd})
+
+}
+
+mostrarAviso()
+
+atualizarPedido()
 
 }
 
 function atualizarPedido(){
 
-    listaPedido.innerHTML = "";
-    subtotal = 0;
+let area = document.getElementById("listaPedido")
 
-    pedido.forEach((item, index) => {
+area.innerHTML=""
 
-        const li = document.createElement("li");
+let total=0
+let itens=0
 
-        li.innerHTML = `
-        ${item.nome} - R$ ${item.preco}
-        <button onclick="removerItem(${index})">❌</button>
-        `;
+carrinho.forEach((item,index)=>{
 
-        listaPedido.appendChild(li);
+let subtotal=item.preco*item.qtd
 
-        subtotal += item.preco;
+total+=subtotal
+itens+=item.qtd
 
-    });
+area.innerHTML+=`
 
-    const totalFinal = subtotal + taxaEntrega;
+<div class="pedidoItem">
 
-    subtotalSpan.innerText = subtotal;
-    taxaEntregaSpan.innerText = taxaEntrega;
-    totalSpan.innerText = totalFinal;
+<span>${item.nome}</span>
 
-    contadorItens.innerText = pedido.length;
+<span>${item.qtd}x</span>
+
+<span>R$ ${subtotal}</span>
+
+<button class="remover" onclick="removerItem(${index})">
+❌
+</button>
+
+</div>
+
+`
+
+})
+
+document.getElementById("total").innerText=total
+
+document.getElementById("resumoCarrinho").innerText =
+itens+" itens • R$"+total
+
+localStorage.setItem("pedido",JSON.stringify(carrinho))
+localStorage.setItem("total",total)
 
 }
 
-function adicionarPedido(categoria, index){
+function mostrarAviso(){
 
-    const produto = produtos[categoria][index];
+let aviso=document.getElementById("aviso")
 
-    pedido.push({
-        nome: produto.nome,
-        preco: produto.preco
-    });
+aviso.classList.add("mostrar")
 
-    atualizarPedido();
+setTimeout(()=>{
+
+aviso.classList.remove("mostrar")
+
+},1500)
 
 }
 
+function confirmarPedido(){
+
+window.location.href="cliente.html"
+
+}
+function limparCarrinho(){
+
+carrinho = []
+
+document.getElementById("listaPedido").innerHTML=""
+
+document.getElementById("total").innerText=0
+
+localStorage.removeItem("pedido")
+localStorage.removeItem("total")
+
+}
 function removerItem(index){
 
-    pedido.splice(index, 1);
+carrinho.splice(index,1)
 
-    atualizarPedido();
-
-}
-
-function limparPedido(){
-
-    pedido = [];
-
-    atualizarPedido();
+atualizarPedido()
 
 }
 
-function verificarPagamento(){
 
-    if(pagamento.value === "Dinheiro"){
 
-        trocoDiv.style.display = "block";
 
-    }else{
+function atualizarCarrinho(){
 
-        trocoDiv.style.display = "none";
+let lista = document.getElementById("listaPedido")
+let totalTela = document.getElementById("total")
 
-    }
+lista.innerHTML = ""
+
+pedido.forEach((item, index) => {
+
+lista.innerHTML += `
+
+<li>
+
+${item.qtd}x ${item.nome} - R$ ${(item.preco * item.qtd).toFixed(2)}
+
+<button onclick="removerItem(${index})">
+❌
+</button>
+
+</li>
+
+`
+
+})
+
+totalTela.innerText = total.toFixed(2)
 
 }
 
-function enviarPedido(){
 
-    const nome = document.getElementById("nomeCliente").value;
-    const endereco = document.getElementById("enderecoCliente").value;
-    const observacao = document.getElementById("observacao").value;
 
-    let mensagem = "🍽 *Pedido - Restaurante Cotonete* %0A%0A";
 
-    mensagem += "👤 Nome: " + nome + "%0A";
-    mensagem += "📍 Endereço: " + endereco + "%0A%0A";
 
-    mensagem += "🛒 Pedido:%0A";
 
-    pedido.forEach(item => {
-        mensagem += "- " + item.nome + " R$ " + item.preco + "%0A";
-    });
+window.onload = function(){
 
-    mensagem += "%0A🧾 Subtotal: R$ " + subtotal;
-    mensagem += "%0A🛵 Entrega: R$ " + taxaEntrega;
-    mensagem += "%0A💰 Total: R$ " + (subtotal + taxaEntrega);
+let pedidoSalvo = JSON.parse(localStorage.getItem("pedido")) || []
+let totalSalvo = parseFloat(localStorage.getItem("total")) || 0
 
-    mensagem += "💳 Pagamento: " + pagamento.value + "%0A";
+pedido = pedidoSalvo
+total = totalSalvo
 
-    if(pagamento.value === "Dinheiro" && troco.value){
-        mensagem += "💵 Troco para: R$ " + troco.value + "%0A";
-    }
+atualizarCarrinho()
 
-    if(observacao){
-        mensagem += "%0A📝 Observação: " + observacao;
-    }
+}
 
-    const telefone = "5599999999999";
 
-    const url = `https://wa.me/${telefone}?text=${mensagem}`;
 
-    window.open(url);
+window.onload = function(){
+
+let pedidoSalvo = JSON.parse(localStorage.getItem("pedido")) || []
+let totalSalvo = parseFloat(localStorage.getItem("total")) || 0
+
+pedido = pedidoSalvo
+total = totalSalvo
+
+atualizarCarrinho()
 
 }
