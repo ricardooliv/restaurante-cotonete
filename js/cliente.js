@@ -52,6 +52,6 @@ localStorage.setItem("endereco", endereco)
 localStorage.setItem("bairro", bairro)
 localStorage.setItem("telefone", telefone)
 
-window.location.href = "resumo.html"
+window.location.href = "pagamento.html"
 
 }

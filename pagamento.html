@@ -15,17 +15,20 @@
 
 <h1>Forma de pagamento</h1>
 
-<button onclick="pagar('Pix')">PIX</button>
+<div class="opcoes-pagamento">
 
-<button onclick="pagar('Cartão')">Cartão</button>
+    <button onclick="pagar('Pix')">PIX</button>
 
-<button onclick="mostrarTroco()">Dinheiro</button>
+    <button onclick="pagar('Cartão')">Cartão</button>
 
+    <button onclick="mostrarTroco()">Dinheiro</button>
+
+</div>
 
 <div id="areaTroco"></div>
 
+</body>
 
 <script src="js/pagamento.js"></script>
 
-</body>
 </html>
