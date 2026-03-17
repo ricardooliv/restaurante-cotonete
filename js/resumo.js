@@ -11,7 +11,10 @@ area.innerHTML += `
 
 <div class="itemResumo">
 
-<span>${item.qtd}x ${item.nome}</span>
+<span>
+${item.qtd}x ${item.nome}
+${item.obs ? `<br><small>${item.obs}</small>` : ""}
+</span>
 
 <span>R$ ${item.preco * item.qtd}</span>
 

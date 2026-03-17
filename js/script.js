@@ -32,6 +32,13 @@ ${acomp}
 
 </div>
 
+<input 
+type="text"
+class="obs"
+id="obs-${cat}-${index}"
+placeholder="Observação (ex: sem cebola)"
+>
+
 <button class="add"
 onclick="adicionar('${prod.nome}',${prod.preco},${index},'${cat}')">
 
@@ -75,7 +82,11 @@ let qtd=parseInt(
 document.getElementById(`qtd-${cat}-${index}`).innerText
 )
 
-let item=carrinho.find(i=>i.nome===nome)
+let obs = document.getElementById(`obs-${cat}-${index}`).value
+
+document.getElementById(`obs-${cat}-${index}`).value = ""
+
+let item=carrinho.find(i=>i.nome===nome && i.obs===obs)
 
 if(item){
 
@@ -83,7 +94,7 @@ item.qtd+=qtd
 
 }else{
 
-carrinho.push({nome,preco,qtd})
+carrinho.push({nome,preco,qtd,obs})
 
 }
 
@@ -113,7 +124,10 @@ area.innerHTML+=`
 
 <div class="pedidoItem">
 
-<span>${item.nome}</span>
+<span>
+${item.nome}
+${item.obs ? `<br><small>${item.obs}</small>` : ""}
+</span>
 
 <span>${item.qtd}x</span>
 
@@ -138,6 +152,21 @@ localStorage.setItem("pedido",JSON.stringify(carrinho))
 localStorage.setItem("total",total)
 
 }
+function abrirCarrinho(){
+
+if(carrinho.length === 0){
+
+alert("Seu carrinho está vazio")
+
+return
+
+}
+
+localStorage.setItem("pedido", JSON.stringify(carrinho))
+
+window.location.href = "resumo.html"
+
+}
 
 function mostrarAviso(){
 
@@ -155,9 +184,20 @@ aviso.classList.remove("mostrar")
 
 function confirmarPedido(){
 
+if(carrinho.length === 0){
+
+alert("Seu carrinho está vazio. Adicione um produto para continuar.")
+
+return
+
+}
+
+localStorage.setItem("pedido",JSON.stringify(carrinho))
+
 window.location.href="cliente.html"
 
 }
+
 function limparCarrinho(){
 
 carrinho = []
@@ -170,6 +210,7 @@ localStorage.removeItem("pedido")
 localStorage.removeItem("total")
 
 }
+
 function removerItem(index){
 
 carrinho.splice(index,1)
@@ -178,65 +219,24 @@ atualizarPedido()
 
 }
 
-
-
-
-function atualizarCarrinho(){
-
-let lista = document.getElementById("listaPedido")
-let totalTela = document.getElementById("total")
-
-lista.innerHTML = ""
-
-pedido.forEach((item, index) => {
-
-lista.innerHTML += `
-
-<li>
-
-${item.qtd}x ${item.nome} - R$ ${(item.preco * item.qtd).toFixed(2)}
-
-<button onclick="removerItem(${index})">
-❌
-</button>
-
-</li>
-
-`
-
-})
-
-totalTela.innerText = total.toFixed(2)
-
-}
-
-
-
-
-
-
 window.onload = function(){
 
 let pedidoSalvo = JSON.parse(localStorage.getItem("pedido")) || []
 let totalSalvo = parseFloat(localStorage.getItem("total")) || 0
 
-pedido = pedidoSalvo
-total = totalSalvo
+carrinho = pedidoSalvo
 
-atualizarCarrinho()
+atualizarPedido()
 
 }
-
-
-
 window.onload = function(){
 
 let pedidoSalvo = JSON.parse(localStorage.getItem("pedido")) || []
-let totalSalvo = parseFloat(localStorage.getItem("total")) || 0
 
-pedido = pedidoSalvo
-total = totalSalvo
+carrinho = pedidoSalvo
 
-atualizarCarrinho()
+atualizarPedido()
+
+mostrarCategoria("quentinhas")
 
 }

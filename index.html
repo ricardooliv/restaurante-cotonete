@@ -5,6 +5,7 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#27ae60">
 
 <title>Cardápio</title>
 
@@ -14,17 +15,32 @@
 
 <body>
 
+<!-- TOPO -->
+
+<div class="topo">
+
+<img src="img/logo.png" class="logo">
 <h1>Cardápio</h1>
-
-<div class="categorias">
-
-<button onclick="mostrarCategoria('quentinhas')">Quentinhas</button>
-<button onclick="mostrarCategoria('churrascos')">Churrascos</button>
-<button onclick="mostrarCategoria('parmegiana')">Parmegiana</button>
 
 </div>
 
+<!-- CATEGORIAS -->
+
+<div class="categorias">
+
+<button onclick="mostrarCategoria('entradas')">Entradas</button>
+<button onclick="mostrarCategoria('quentinhas')">Quentinhas</button>
+<button onclick="mostrarCategoria('churrascos')">Churrascos</button>
+<button onclick="mostrarCategoria('parmegiana')">Parmegiana</button>
+<button onclick="mostrarCategoria('bebidas')">Bebidas</button>
+
+</div>
+
+<!-- PRODUTOS -->
+
 <div id="produtos"></div>
+
+<!-- PEDIDO -->
 
 <h2>Seu Pedido</h2>
 
@@ -37,21 +53,21 @@ Total: R$ <span id="total">0</span>
 <div class="botoesPedido">
 
 <button class="confirmar" onclick="confirmarPedido()">
-Confirmar Pedido
+Confirmar pedido
 </button>
 
 </div>
 
+<!-- AVISO -->
+
 <div id="aviso">Produto adicionado</div>
 
-<!-- carrinho fixo -->
+<!-- CARRINHO FIXO -->
 
-<div id="carrinhoBar" onclick="confirmarPedido()">
+<div id="carrinhoBar" onclick="abrirCarrinho()">
 
 <span id="resumoCarrinho">
-
 0 itens • R$0
-
 </span>
 
 </div>

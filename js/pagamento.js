@@ -14,7 +14,6 @@ area.innerHTML = `
 
 }
 
-
 function trocoSim(){
 
 let area = document.getElementById("areaTroco")
@@ -32,7 +31,6 @@ Confirmar
 `
 
 }
-
 
 function pagar(tipo){
 
@@ -52,7 +50,13 @@ let mensagem = "🍽️ *PEDIDO*\n\n"
 
 pedido.forEach(item => {
 
-mensagem += item.qtd + "x " + item.nome + "\n"
+mensagem += item.qtd + "x " + item.nome
+
+if(item.obs && item.obs !== ""){
+mensagem += " (" + item.obs + ")"
+}
+
+mensagem += "\n"
 
 })
 
