@@ -23,7 +23,6 @@ area.innerHTML = `
 <p>Troco para quanto?</p>
 
 <input id="troco" placeholder="Ex: 50">
-
 <button onclick="pagar('Dinheiro')">
 Confirmar
 </button>

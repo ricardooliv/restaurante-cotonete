@@ -9,7 +9,7 @@ area.innerHTML=""
 produtos[cat].forEach((prod,index)=>{
 
 let acomp = prod.acompanhamentos
-? `<p class="acomp">${prod.acompanhamentos.join(" • ")}</p>`
+? `<p class="acomp">${prod.acompanhamentos.join(", ")}</p>`
 : ""
 
 area.innerHTML += `
@@ -36,7 +36,7 @@ ${acomp}
 type="text"
 class="obs"
 id="obs-${cat}-${index}"
-placeholder="Observação (ex: sem cebola)"
+placeholder="Observação:"
 >
 
 <button class="add"
