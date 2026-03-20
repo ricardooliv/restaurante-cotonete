@@ -102,7 +102,7 @@ mensagem += "\n💰 Troco para: R$" + troco
 
 mensagem += "\n\n⏱️ Tempo estimado: " + tempo
 
-let link = "https://wa.me/5586998677278?text=" + encodeURIComponent(mensagem)
+let link = "https://wa.me/5586998634359?text=" + encodeURIComponent(mensagem)
 
 window.open(link)
 
