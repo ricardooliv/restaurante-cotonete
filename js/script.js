@@ -1,10 +1,64 @@
 let carrinho = []
+let produtos = {}
+
+// TESTE
+const modoTeste = false
+
+function verificarHorario() {
+
+    let dia, hora, minutos
+
+    if (modoTeste) {
+        dia = 3 
+        hora = 19 
+        minutos = 0
+    } else {
+        const agora = new Date()
+        dia = agora.getDay()
+        hora = agora.getHours()
+        minutos = agora.getMinutes()
+    }
+
+    const horaAtual = hora + minutos / 60
+
+    const manha = (
+        dia !== 1 &&
+        horaAtual >= 9 &&
+        horaAtual <= 13.5
+    )
+
+    const noite = (
+        (dia === 5 || dia === 6 || dia === 0 || modoTeste) &&
+        horaAtual >= 18 &&
+        horaAtual <= 22.5
+    )
+
+    return { manha, noite }
+}
+
+function pegarCardapioAtual() {
+    const { manha, noite } = verificarHorario()
+
+    if (manha) return cardapioManha
+    if (noite) return cardapioNoite
+
+    return {}
+}
+
+function restauranteAberto() {
+    const { manha, noite } = verificarHorario()
+    return manha || noite
+}
 
 function mostrarCategoria(cat){
 
 let area = document.getElementById("produtos")
-
 area.innerHTML=""
+
+if(!produtos[cat]){
+    area.innerHTML = "<p>Categoria não disponível nesse horário</p>"
+    return
+}
 
 produtos[cat].forEach((prod,index)=>{
 
@@ -49,31 +103,21 @@ Adicionar
 </div>
 
 `
-
 })
 
 }
 
 function mais(index,cat){
-
 let span=document.getElementById(`qtd-${cat}-${index}`)
-
 span.innerText=parseInt(span.innerText)+1
-
 }
 
 function menos(index,cat){
-
 let span=document.getElementById(`qtd-${cat}-${index}`)
-
 let qtd=parseInt(span.innerText)
-
 if(qtd>1){
-
 span.innerText=qtd-1
-
 }
-
 }
 
 function adicionar(nome,preco,index,cat){
@@ -83,31 +127,23 @@ document.getElementById(`qtd-${cat}-${index}`).innerText
 )
 
 let obs = document.getElementById(`obs-${cat}-${index}`).value
-
 document.getElementById(`obs-${cat}-${index}`).value = ""
 
 let item=carrinho.find(i=>i.nome===nome && i.obs===obs)
 
 if(item){
-
 item.qtd+=qtd
-
 }else{
-
 carrinho.push({nome,preco,qtd,obs})
-
 }
 
 mostrarAviso()
-
 atualizarPedido()
-
 }
 
 function atualizarPedido(){
 
 let area = document.getElementById("listaPedido")
-
 area.innerHTML=""
 
 let total=0
@@ -140,103 +176,100 @@ ${item.obs ? `<br><small>${item.obs}</small>` : ""}
 </div>
 
 `
-
 })
 
 document.getElementById("total").innerText=total
-
 document.getElementById("resumoCarrinho").innerText =
 itens+" itens • R$"+total
 
 localStorage.setItem("pedido",JSON.stringify(carrinho))
 localStorage.setItem("total",total)
-
 }
+
 function abrirCarrinho(){
 
 if(carrinho.length === 0){
-
 alert("Seu carrinho está vazio")
-
 return
-
 }
 
 localStorage.setItem("pedido", JSON.stringify(carrinho))
-
 window.location.href = "resumo.html"
-
 }
 
 function mostrarAviso(){
-
 let aviso=document.getElementById("aviso")
-
 aviso.classList.add("mostrar")
 
 setTimeout(()=>{
-
 aviso.classList.remove("mostrar")
-
 },1500)
-
 }
 
 function confirmarPedido(){
 
-if(carrinho.length === 0){
-
-alert("Seu carrinho está vazio. Adicione um produto para continuar.")
-
+if(!restauranteAberto()){
+alert("Estamos fechados no momento")
 return
-
 }
 
-localStorage.setItem("pedido",JSON.stringify(carrinho))
+let pedidoSalvo = JSON.parse(localStorage.getItem("pedido")) || []
 
+if(pedidoSalvo.length === 0){
+alert("Seu carrinho está vazio. Adicione um produto para continuar.")
+return
+}
+
+localStorage.setItem("pedido",JSON.stringify(pedidoSalvo))
 window.location.href="cliente.html"
 
 }
 
 function limparCarrinho(){
-
 carrinho = []
-
 document.getElementById("listaPedido").innerHTML=""
-
 document.getElementById("total").innerText=0
 
 localStorage.removeItem("pedido")
 localStorage.removeItem("total")
-
 }
 
 function removerItem(index){
-
 carrinho.splice(index,1)
-
 atualizarPedido()
-
 }
 
 window.onload = function(){
 
-let pedidoSalvo = JSON.parse(localStorage.getItem("pedido")) || []
-let totalSalvo = parseFloat(localStorage.getItem("total")) || 0
+const { noite } = verificarHorario()
 
-carrinho = pedidoSalvo
+produtos = pegarCardapioAtual()
 
-atualizarPedido()
+// aviso de fechado
+if (!restauranteAberto()) {
+    const aviso = document.getElementById("avisoFechado")
 
+    if (aviso) {
+        aviso.style.display = "block"
+        aviso.innerText = "Estamos fechados. Funcionamos de terça a domingo das 10h às 14h e à noite de sexta a domingo das 18h às 23h."
+    }
 }
-window.onload = function(){
 
-let pedidoSalvo = JSON.parse(localStorage.getItem("pedido")) || []
+if (noite) {
+    const btn = document.querySelector("button[onclick=\"mostrarCategoria('quentinhas')\"]")
+    if (btn) btn.innerText = "Espetinhos"
+}
 
-carrinho = pedidoSalvo
+carrinho = JSON.parse(localStorage.getItem("pedido")) || []
 
 atualizarPedido()
 
-mostrarCategoria("quentinhas")
+if (produtos.quentinhas) {
+    mostrarCategoria("quentinhas")
+} else if (produtos.entradas) {
+    mostrarCategoria("entradas")
+} else if (produtos.bebidas) {
+    mostrarCategoria("bebidas")
+}
 
 }

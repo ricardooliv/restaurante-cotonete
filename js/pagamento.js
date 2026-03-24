@@ -11,7 +11,6 @@ area.innerHTML = `
 <button onclick="pagar('Dinheiro')">Não</button>
 
 `
-
 }
 
 function trocoSim(){
@@ -28,20 +27,20 @@ Confirmar
 </button>
 
 `
-
 }
 
 function pagar(tipo){
 
-let pedido = JSON.parse(localStorage.getItem("pedido"))
-let subtotal = parseFloat(localStorage.getItem("total"))
+let pedido = JSON.parse(localStorage.getItem("pedido")) || []
+let subtotal = parseFloat(localStorage.getItem("total")) || 0
 
 let tipoPedido = localStorage.getItem("tipoPedido")
 
-let nome = localStorage.getItem("nome")
-let endereco = localStorage.getItem("endereco")
-let bairro = localStorage.getItem("bairro")
-let telefone = localStorage.getItem("telefone")
+let nome = localStorage.getItem("nome") || ""
+let endereco = localStorage.getItem("endereco") || ""
+let bairro = localStorage.getItem("bairro") || ""
+let telefone = localStorage.getItem("telefone") || ""
+let referencia = localStorage.getItem("referencia") || "" 
 
 let troco = document.getElementById("troco")?.value || ""
 
@@ -67,7 +66,6 @@ let tempo = ""
 if(tipoPedido === "entrega"){
 
 let taxa = 5
-
 totalFinal += taxa
 
 tempo = "40 minutos"
@@ -79,6 +77,11 @@ mensagem += "🚚 Tipo: ENTREGA\n"
 mensagem += "Cliente: " + nome + "\n"
 mensagem += "Endereço: " + endereco + "\n"
 mensagem += "Bairro: " + bairro + "\n"
+
+if(referencia && referencia !== ""){
+mensagem += "Referência: " + referencia + "\n"
+}
+
 mensagem += "Telefone: " + telefone + "\n"
 
 }else{
@@ -95,9 +98,7 @@ mensagem += "Cliente: " + nome + "\n"
 mensagem += "\n💳 Pagamento: " + tipo
 
 if(tipo === "Dinheiro" && troco !== ""){
-
 mensagem += "\n💰 Troco para: R$" + troco
-
 }
 
 mensagem += "\n\n⏱️ Tempo estimado: " + tempo

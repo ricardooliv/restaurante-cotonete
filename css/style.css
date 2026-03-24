@@ -8,7 +8,6 @@ body{
     padding-bottom: 90px;
 }
 
-/* BOTÕES (GLOBAL) */
 button{
     padding: 12px 16px;
     border-radius: 10px;
@@ -18,7 +17,6 @@ button{
     cursor: pointer;
 }
 
-/* TOPO */
 .topo{
     display: flex;
     align-items: center;
@@ -38,7 +36,6 @@ button{
     margin: 0;
 }
 
-/* CATEGORIAS */
 .categorias{
     position: sticky;
     top: 0;
@@ -61,7 +58,6 @@ button{
     border-radius: 20px;
 }
 
-/* PRODUTOS */
 .produto{
     background: white;
     padding: 10px;
@@ -88,7 +84,6 @@ button{
     line-height: 1.2;
 }
 
-/* CONTROLE QUANTIDADE */
 .controle{
     display: flex;
     align-items: center;
@@ -105,7 +100,6 @@ button{
     border: none;
 }
 
-/* BOTÃO ADICIONAR */
 .add{
     margin-top: 10px;
     background: #27ae60;
@@ -117,7 +111,6 @@ button{
     width: 100%;
 }
 
-/* PEDIDO */
 #listaPedido{
     background: white;
     padding: 10px;
@@ -137,7 +130,6 @@ button{
     margin-top: 8px;
 }
 
-/* BOTÕES DO PEDIDO */
 .botoesPedido{
     display: flex;
     justify-content: center;
@@ -152,7 +144,6 @@ button{
     border-radius: 10px;
 }
 
-/* FORMULÁRIO CLIENTE */
 .form{
     background: white;
     padding: 20px;
@@ -176,7 +167,6 @@ button{
     color: white;
 }
 
-/* RETIRADA / ENTREGA */
 .tipoPedido{
     display: flex;
     gap: 10px;
@@ -190,8 +180,6 @@ button{
     padding: 14px;
     font-size: 15px;
 }
-
-/* PAGAMENTO */
 .opcoes-pagamento{
     display: flex;
     gap: 10px;
@@ -205,7 +193,6 @@ button{
     padding: 14px;
 }
 
-/* RESUMO */
 .resumo-botoes{
     display: flex;
     gap: 10px;
@@ -216,7 +203,6 @@ button{
     flex: 1;
 }
 
-/* AVISO */
 #aviso{
     position: fixed;
     bottom: 90px;
@@ -235,7 +221,6 @@ button{
     opacity: 1;
 }
 
-/* CARRINHO FIXO */
 #carrinhoBar{
     position: fixed;
     bottom: 15px;
@@ -249,7 +234,6 @@ button{
     cursor: pointer;
 }
 
-/* REMOVE ITEM */
 .remover{
     background: none;
     border: none;

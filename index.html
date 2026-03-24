@@ -15,10 +15,16 @@
 
 <body>
 
+<div id="avisoFechado" style="display:none; background:#e74c3c; color:white; padding:10px; text-align:center;">
+</div>
+
 <div class="topo">
 
 <img src="img/logo.png" class="logo">
+
 <h1>Cardápio</h1>
+
+<p id="statusLoja" style="font-weight:bold;"></p>
 
 </div>
 
@@ -53,15 +59,32 @@ Confirmar pedido
 <div id="aviso">Produto adicionado</div>
 
 <div id="carrinhoBar" onclick="abrirCarrinho()">
-
 <span id="resumoCarrinho">
 0 itens • R$0
 </span>
-
 </div>
 
 <script src="data/produtos.js"></script>
 <script src="js/script.js"></script>
+
+
+<script>
+window.addEventListener("load", function(){
+
+    const status = document.getElementById("statusLoja")
+
+    if (typeof restauranteAberto === "function") {
+        if (restauranteAberto()) {
+            status.innerText = "🟢 Aberto agora"
+            status.style.color = "green"
+        } else {
+            status.innerText = "🔴 Fechado agora"
+            status.style.color = "red"
+        }
+    }
+
+})
+</script>
 
 </body>
 
