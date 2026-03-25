@@ -66,7 +66,7 @@ area.innerHTML = `
 
 <input id="endereco" placeholder="Endereço" value="${endereco}">
 
-<input id="referencia" placeholder="Ex: casa azul, perto da igreja (opcional)" value="${referencia}">
+<input id="referencia" placeholder="Pnto de Referencia (opcional)" value="${referencia}">
 
 <input id="bairro" placeholder="Bairro" value="${bairro}">
 
