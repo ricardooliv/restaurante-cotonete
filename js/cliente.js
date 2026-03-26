@@ -1,4 +1,3 @@
-
 const modoTeste = false
 
 function verificarNoite(){

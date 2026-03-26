@@ -1,7 +1,7 @@
 const cardapioManha = {
     entradas: [
-        { nome:"batata frita G", preco:20 },
-        { nome:"macaxeira frita G", preco:20 }
+        { nome:"Batata Frita G", preco:20 },
+        { nome:"Macaxeira Frita G", preco:20 }
     ],
 
     quentinhas: [
@@ -17,7 +17,8 @@ const cardapioManha = {
             preco:20,
             acompanhamentos:[
                 "Arroz Agrega","Feijão Tropeiro","Macarrão","Salada","Farofa","Vinagrete"
-            ]
+            ],
+            destaque: true
 
         },
         {
@@ -79,7 +80,8 @@ const cardapioManha = {
             preco:110,
             acompanhamentos:[
                 "Arroz Agrega e Maria Isabel","Feijão Tropeiro","Batata Frita","Salada"
-            ]
+            ],
+            destaque: true
         }
 
 
@@ -91,7 +93,7 @@ const cardapioManha = {
             nome:"Parmegiana executivo",
             preco: 55,
             acompanhamentos:[
-                "Arroz agrega","Feijao tropeiro","pure de batata","Salada"
+                "Arroz agrega","Feijao tropeiro","Purê de batata","Salada"
             ]
         },
 
@@ -99,22 +101,31 @@ const cardapioManha = {
             nome:"Parmegiana Medio",
             preco: 70,
             acompanhamentos:[
-                "Arroz agrega e branco","Feijao tropeiro","pure de batata","Salada"
-            ]
+                "Arroz agrega e branco","Feijao tropeiro","Purê de batata","Salada"
+            ],
+            destaque: true
         },
 
         {
             nome:"Parmegiana Grande",
             preco: 135,
             acompanhamentos:[
-                "Arroz agrega e branco","Feijao tropeiro","pure de batata","Salada"
+                "Arroz agrega e branco","Feijao tropeiro","Purê de batata","Salada"
             ]
         }
     ],
 
     bebidas: [
-        { nome:"Coca Cola lata", preco:6 },
-        { nome:"Guarana lata", preco:6 },
+        {
+            nome:"Coca Cola lata", 
+            preco:6,
+            opcoes: ["Normal", "Zero"]
+        },
+        { 
+            nome:"Guarana lata",
+            preco:6,
+            opcoes: ["Normal", "Zero"] 
+        },
         { nome:"fanta Uva lata", preco:6 },
         { nome:"fanta Laranja lata", preco:6 }
     ]
@@ -123,8 +134,8 @@ const cardapioManha = {
 const cardapioNoite = {
 
     entradas: [
-        { nome:"batata frita G", preco:20 },
-        { nome:"macaxeira frita G", preco:20 }
+        { nome:"Batata frita G", preco:20 },
+        { nome:"Macaxeira frita G", preco:20 }
     ],
 
      quentinhas: [
@@ -153,7 +164,8 @@ const cardapioNoite = {
         "Arroz à grega",
         "Farofa",
         "Vinagrete"
-    ]
+    ],
+    destaque: true
 }
 ],
 
@@ -192,7 +204,8 @@ const cardapioNoite = {
             preco:140,
             acompanhamentos:[
                 "Arroz Agrega e Maria Isabel","Feijão Tropeiro","Batata Frita","Salada"
-            ]
+            ],
+            destaque: true
         },
         {
             nome:"Picanha Nobre 500g",
@@ -211,7 +224,7 @@ const cardapioNoite = {
             nome:"Parmegiana executivo",
             preco: 55,
             acompanhamentos:[
-                "Arroz agrega","Feijao tropeiro","pure de batata","Salada"
+                "Arroz agrega","Feijao tropeiro","Purê de batata","Salada"
             ]
         },
 
@@ -219,22 +232,31 @@ const cardapioNoite = {
             nome:"Parmegiana Medio",
             preco: 70,
             acompanhamentos:[
-                "Arroz agrega e branco","Feijao tropeiro","pure de batata","Salada"
-            ]
+                "Arroz agrega e branco","Feijao tropeiro","Purê de batata","Salada"
+            ],
+            destaque: true
         },
 
         {
             nome:"Parmegiana Grande",
             preco: 135,
             acompanhamentos:[
-                "Arroz agrega e branco","Feijao tropeiro","pure de batata","Salada"
+                "Arroz agrega e branco","Feijao tropeiro","Purê de batata","Salada"
             ]
         }
     ],
 
     bebidas: [
-        { nome:"Coca Cola lata", preco:6 },
-        { nome:"Guarana lata", preco:6 },
+        {
+            nome:"Coca Cola lata", 
+            preco:6,
+            opcoes: ["Normal", "Zero"]
+        },
+        { 
+            nome:"Guarana lata",
+            preco:6,
+            opcoes: ["Normal", "Zero"] 
+        },
         { nome:"fanta Uva lata", preco:6 },
         { nome:"fanta Laranja lata", preco:6 }
     ]

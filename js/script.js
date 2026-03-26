@@ -62,13 +62,63 @@ if(!produtos[cat]){
 
 produtos[cat].forEach((prod,index)=>{
 
+let ehSimples = cat === "bebidas" || cat === "entradas"
+
+let destaque = prod.destaque 
+? `<span class="tag">🔥 Mais pedido</span>` 
+: ""
+
 let acomp = prod.acompanhamentos
 ? `<p class="acomp">${prod.acompanhamentos.join(", ")}</p>`
 : ""
 
-area.innerHTML += `
+// NORMAL / ZERO
+let opcoes = prod.opcoes 
+? `
+<div class="opcoes-botoes" id="opcao-${cat}-${index}">
+${prod.opcoes.map((o,i) => `
+<button 
+type="button"
+class="btn-opcao ${i === 0 ? 'ativo' : ''}" 
+onclick="selecionarOpcao('${cat}',${index},this)">
+${o}
+</button>
+`).join("")}
+</div>
+`
+: ""
+
+area.innerHTML += ehSimples ? `
+
+<div class="produto bebida">
+
+<div class="bebida-linha">
+<span class="nome-bebida">${prod.nome}</span>
+<span class="preco-bebida">R$ ${prod.preco}</span>
+</div>
+
+${opcoes}
+
+<div class="bebida-acoes">
+
+<button onclick="menos(${index},'${cat}')">-</button>
+<span id="qtd-${cat}-${index}">1</span>
+<button onclick="mais(${index},'${cat}')">+</button>
+
+<button class="add-bebida"
+onclick="adicionar('${prod.nome}',${prod.preco},${index},'${cat}')">
++ Adicionar
+</button>
+
+</div>
+
+</div>
+
+` : `
 
 <div class="produto">
+
+${destaque}
 
 <h3>${prod.nome}</h3>
 
@@ -79,9 +129,7 @@ ${acomp}
 <div class="controle">
 
 <button onclick="menos(${index},'${cat}')">-</button>
-
 <span id="qtd-${cat}-${index}">1</span>
-
 <button onclick="mais(${index},'${cat}')">+</button>
 
 </div>
@@ -90,13 +138,13 @@ ${acomp}
 type="text"
 class="obs"
 id="obs-${cat}-${index}"
-placeholder="Observação:"
+placeholder="Ex: sem cebola, bem passado..."
 >
 
 <button class="add"
 onclick="adicionar('${prod.nome}',${prod.preco},${index},'${cat}')">
 
-Adicionar
+Adicionar • R$ ${prod.preco}
 
 </button>
 
@@ -104,6 +152,18 @@ Adicionar
 
 `
 })
+
+}
+
+function selecionarOpcao(cat,index,botao){
+
+let container = document.getElementById(`opcao-${cat}-${index}`)
+
+let botoes = container.querySelectorAll(".btn-opcao")
+
+botoes.forEach(b => b.classList.remove("ativo"))
+
+botao.classList.add("ativo")
 
 }
 
@@ -126,15 +186,36 @@ let qtd=parseInt(
 document.getElementById(`qtd-${cat}-${index}`).innerText
 )
 
-let obs = document.getElementById(`obs-${cat}-${index}`).value
-document.getElementById(`obs-${cat}-${index}`).value = ""
+// NORMAL / ZERO
+let containerOpcao = document.getElementById(`opcao-${cat}-${index}`)
+let opcao = ""
 
-let item=carrinho.find(i=>i.nome===nome && i.obs===obs)
+if(containerOpcao){
+    let ativo = containerOpcao.querySelector(".btn-opcao.ativo")
+    if(ativo){
+        opcao = ativo.innerText
+    }
+}
+
+// OBS
+let campoObs = document.getElementById(`obs-${cat}-${index}`)
+let obs = ""
+
+if(campoObs){
+    obs = campoObs.value
+    campoObs.value = ""
+}
+
+let item=carrinho.find(i=> 
+    i.nome===nome && 
+    i.obs===obs &&
+    i.opcao===opcao
+)
 
 if(item){
 item.qtd+=qtd
 }else{
-carrinho.push({nome,preco,qtd,obs})
+carrinho.push({nome,preco,qtd,obs,opcao})
 }
 
 mostrarAviso()
@@ -161,7 +242,7 @@ area.innerHTML+=`
 <div class="pedidoItem">
 
 <span>
-${item.nome}
+${item.nome} ${item.opcao ? `(${item.opcao})` : ""}
 ${item.obs ? `<br><small>${item.obs}</small>` : ""}
 </span>
 
@@ -180,7 +261,7 @@ ${item.obs ? `<br><small>${item.obs}</small>` : ""}
 
 document.getElementById("total").innerText=total
 document.getElementById("resumoCarrinho").innerText =
-itens+" itens • R$"+total
+"Ver pedido • R$"+total
 
 localStorage.setItem("pedido",JSON.stringify(carrinho))
 localStorage.setItem("total",total)
@@ -199,6 +280,7 @@ window.location.href = "resumo.html"
 
 function mostrarAviso(){
 let aviso=document.getElementById("aviso")
+aviso.innerText = "Adicionado ao pedido"
 aviso.classList.add("mostrar")
 
 setTimeout(()=>{

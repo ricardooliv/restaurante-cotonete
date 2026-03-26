@@ -15,58 +15,59 @@
 
 <body>
 
-<div id="avisoFechado" style="display:none; background:#e74c3c; color:white; padding:10px; text-align:center;">
-</div>
+<div id="avisoFechado" class="aviso-fechado"></div>
 
 <div class="topo">
 
-<img src="img/logo.png" class="logo">
+    <img src="img/logo.png" class="logo">
 
-<h1>Cardápio</h1>
-
-<p id="statusLoja" style="font-weight:bold;"></p>
+    <div class="info-topo">
+        <h1>Cardápio</h1>
+        <p id="statusLoja" class="status-loja"></p>
+    </div>
 
 </div>
 
 <div class="categorias">
 
-<button onclick="mostrarCategoria('entradas')">Entradas</button>
-<button onclick="mostrarCategoria('quentinhas')">Quentinhas</button>
-<button onclick="mostrarCategoria('churrascos')">Churrascos</button>
-<button onclick="mostrarCategoria('parmegiana')">Parmegiana</button>
-<button onclick="mostrarCategoria('bebidas')">Bebidas</button>
+    <button onclick="mostrarCategoria('entradas')">Entradas</button>
+    <button onclick="mostrarCategoria('quentinhas')">Quentinhas</button>
+    <button onclick="mostrarCategoria('churrascos')">Churrascos</button>
+    <button onclick="mostrarCategoria('parmegiana')">Parmegiana</button>
+    <button onclick="mostrarCategoria('bebidas')">Bebidas</button>
 
 </div>
 
-<div id="produtos"></div>
+<div id="produtos" class="produtos-container"></div>
 
-<h2>Seu Pedido</h2>
+<div class="pedido-container">
 
-<div id="listaPedido"></div>
+    <h2>Seu Pedido</h2>
 
-<div class="total">
-Total: R$ <span id="total">0</span>
+    <div id="listaPedido"></div>
+
+    <div class="total">
+        Total: R$ <span id="total">0</span>
+    </div>
+
+    <div class="botoesPedido">
+        <button class="confirmar" onclick="confirmarPedido()">
+            Finalizar pedido
+        </button>
+    </div>
+
 </div>
 
-<div class="botoesPedido">
+<div id="aviso" class="aviso">Produto adicionado</div>
 
-<button class="confirmar" onclick="confirmarPedido()">
-Confirmar pedido
-</button>
-
-</div>
-
-<div id="aviso">Produto adicionado</div>
-
-<div id="carrinhoBar" onclick="abrirCarrinho()">
-<span id="resumoCarrinho">
-0 itens • R$0
-</span>
+<div id="carrinhoBar" class="carrinho-bar" onclick="abrirCarrinho()">
+    <span id="resumoCarrinho">
+        Ver pedido • R$0
+    </span>
 </div>
 
 <script src="data/produtos.js"></script>
 <script src="js/script.js"></script>
-
 
 <script>
 window.addEventListener("load", function(){
@@ -76,10 +77,10 @@ window.addEventListener("load", function(){
     if (typeof restauranteAberto === "function") {
         if (restauranteAberto()) {
             status.innerText = "🟢 Aberto agora"
-            status.style.color = "green"
+            status.classList.add("aberto")
         } else {
             status.innerText = "🔴 Fechado agora"
-            status.style.color = "red"
+            status.classList.add("fechado")
         }
     }
 
@@ -87,5 +88,4 @@ window.addEventListener("load", function(){
 </script>
 
 </body>
-
 </html>

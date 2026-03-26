@@ -44,12 +44,18 @@ let referencia = localStorage.getItem("referencia") || ""
 
 let troco = document.getElementById("troco")?.value || ""
 
-let mensagem = "🍽️ *PEDIDO*\n\n"
+let mensagem = " *PEDIDO*\n\n"
 
 pedido.forEach(item => {
 
 mensagem += item.qtd + "x " + item.nome
 
+// ZERO / NORMAL
+if(item.opcao && item.opcao !== ""){
+mensagem += " (" + item.opcao + ")"
+}
+
+// OBS
 if(item.obs && item.obs !== ""){
 mensagem += " (" + item.obs + ")"
 }
@@ -68,12 +74,12 @@ if(tipoPedido === "entrega"){
 let taxa = 5
 totalFinal += taxa
 
-tempo = "40 minutos"
+//tempo = "40 minutos"
 
 mensagem += "Entrega: R$5\n"
 mensagem += "*Total: R$" + totalFinal + "*\n\n"
 
-mensagem += "🚚 Tipo: ENTREGA\n"
+mensagem += " Tipo: ENTREGA\n"
 mensagem += "Cliente: " + nome + "\n"
 mensagem += "Endereço: " + endereco + "\n"
 mensagem += "Bairro: " + bairro + "\n"
@@ -86,22 +92,22 @@ mensagem += "Telefone: " + telefone + "\n"
 
 }else{
 
-tempo = "30 minutos"
+//tempo = "30 minutos"
 
 mensagem += "*Total: R$" + totalFinal + "*\n\n"
 
-mensagem += "🏪 Tipo: RETIRADA\n"
+mensagem += " Tipo: RETIRADA\n"
 mensagem += "Cliente: " + nome + "\n"
 
 }
 
-mensagem += "\n💳 Pagamento: " + tipo
+mensagem += "\n Pagamento: " + tipo
 
 if(tipo === "Dinheiro" && troco !== ""){
-mensagem += "\n💰 Troco para: R$" + troco
+mensagem += "\n Troco para: R$" + troco
 }
 
-mensagem += "\n\n⏱️ Tempo estimado: " + tempo
+//mensagem += "\n\n Tempo estimado: " + tempo
 
 let link = "https://wa.me/5586998634359?text=" + encodeURIComponent(mensagem)
 
